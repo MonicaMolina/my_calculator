@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class CalculatorButton extends StatelessWidget {
   final String text;
+  final int fillColor;
+  final Function callback;
 
   // ignore: use_key_in_widget_constructors
-  const CalculatorButton({
-    required this.text,
-  });
+  const CalculatorButton(
+      {required this.text, required this.fillColor, required this.callback});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,13 +16,18 @@ class CalculatorButton extends StatelessWidget {
         width: 70,
         height: 70,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(16.0),
-            primary: Colors.black,
-            textStyle: const TextStyle(fontSize: 20),
-          ),
-          onPressed: () => {},
+          onPressed: () => callback(text),
           child: Text(text),
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 25)),
+            backgroundColor: MaterialStateProperty.all(Color(fillColor)),
+            shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(50.0),
+              ),
+            )),
+          ),
         ),
       ),
     );
